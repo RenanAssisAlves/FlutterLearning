@@ -76,8 +76,8 @@ class _HomeState extends State<Home> {
             return ListView.builder(itemCount: snapshot.data?.length,
                 itemBuilder: (context, index) {
 
-                  List<Post>? list = snapshot.data;
-                  Post post = list![index];
+                  List<Post> list = snapshot.data ?? [Post(0, 0, "Sem internet", "Sem internet")];
+                  Post post = list[index];
 
                   return ListTile(
                     title: Text(post.title),
