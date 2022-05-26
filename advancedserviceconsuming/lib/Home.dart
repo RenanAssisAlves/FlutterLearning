@@ -14,11 +14,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
-  String _baseURL = "https://jsonplaceholder.typicode.com";
+  var _baseURL = Uri.http("jsonplaceholder.typicode.com", "/posts");
   bool error = false;
   Future<List<Post>> _getPosts() async {
-    http.Response response = await http.get(_baseURL + "/posts");
+    http.Response response = await http.get(_baseURL);
     var dadosJson = json.decode(response.body);
     List<Post> posts = <Post>[];
     for (var post in dadosJson)
@@ -73,11 +72,12 @@ class _HomeState extends State<Home> {
         else
           {
             print("List: Loaded!");
-            return ListView.builder(itemCount: snapshot.data?.length,
+            return ListView.builder(
+                itemCount: snapshot.data?.length,
                 itemBuilder: (context, index) {
 
-                  List<Post>? list = snapshot.data;
-                  Post post = list![index];
+                  List<Post> list = snapshot.data ?? [Post(0, 0, "Sem internet", "Sem internet")];
+                  Post post = list[index];
 
                   return ListTile(
                     title: Text(post.title),
